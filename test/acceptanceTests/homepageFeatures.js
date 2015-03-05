@@ -12,6 +12,18 @@ describe('homepage', function(){
     }, booleanValue);
   }
 
+  function createUser(casper){
+    casper.then(function(){
+      this.click('#signup')
+    });
+    casper.then(function(){
+      fillForm(this, true)
+    });
+    casper.then(function(){
+      expect("body").to.contain.text("Welcome mishal")
+    });
+  }
+
   it('has sign up button', function(){
     casper.then(function(){
       expect("#signup").to.be.visible
@@ -39,15 +51,35 @@ describe('homepage', function(){
   });
 
   it('a user should be able to sign up', function(){
+    createUser(casper);
+  });
+
+  it('a user must enter their name, email and password', function(){
     casper.then(function(){
       this.click('#signup')
     });
     casper.then(function(){
-      fillForm(this, true)
+      this.click('#sign_in_submit')
     });
     casper.then(function(){
-      expect("body").to.contain.text("Welcome mishal")
+      expect("#signup").to.not.be.visible
+      expect("body").to.contain.text("ERROR")
     });
-  });
+
+  })
+
+  it('a user must enter a unique email', function(){
+    casper.then(function(){
+      this.click('#signup')
+    });
+    casper.then(function(){
+      this.click('#sign_in_submit')
+    });
+    casper.then(function(){
+      expect("#signup").to.not.be.visible
+      expect("body").to.contain.text("ERROR")
+    });
+
+  })
 
 });

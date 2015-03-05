@@ -10,15 +10,14 @@ db.once('open', function (callback) {
 describe('user', function(){
 
   it('can be saved', function(done){
-    new User({names: "mishal",
+    new User({name: "mishal",
               email: "email",
               password: "password"
               }).save(done)
   })
 
   afterEach(function(){
-    mongoose.connection.db.dropCollection('User', function(err, result) {...});
-    // mongoose.connection.db.users.drop()
+    mongoose.connection.db.dropCollection('User');
   });
 
 });
