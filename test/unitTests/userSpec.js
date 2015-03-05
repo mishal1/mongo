@@ -18,6 +18,7 @@ describe('user', function(){
 
   afterEach(function(){
     mongoose.connection.db.dropCollection('User', function(err, result) {...});
+    // mongoose.connection.db.users.drop()
   });
 
 });
