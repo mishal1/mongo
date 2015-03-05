@@ -46,7 +46,7 @@ describe('homepage', function(){
       fillForm(this, true)
     });
     casper.then(function(){
-      expect("body").to.contain.text("Welcome Mishal")
+      expect("body").to.contain.text("Welcome mishal")
     });
   });
 
