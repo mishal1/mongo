@@ -3,11 +3,17 @@
   <body>
     
     <% if(user){ %>
+
       <section id='welcome-message'>
         Welcome <%= user.name %>
       </section>
+      <a href='/signout' id='sign_out'>Sign out</a>
+
+    <% } else { %>
+
+      <a href='/signup' id='signup'>Sign up</a>
+      <a href='/signin' id='signin'>Sign in</a>
     <% } %>
 
-    <a href='/signup' id='signup'>Sign up</a>
   </body>
 </html>

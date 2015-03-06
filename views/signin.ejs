@@ -1,5 +1,7 @@
 <html>
+
   <head></head>
+
   <body>
 
     <% if(message){ %>
@@ -7,14 +9,14 @@
       <br>
     <% } %>
 
-    Sign up
+    Sign in
     
-    <form action='/sessions' method='post' id='signup_form'>
-      Name: <input name='name' type='text' id='name'>
+    <form action='/new' method='post' id='signin_form'>
       Email: <input name='email' type='text' id='email'>
       Password: <input name='password' type='password' id='password'>
-      <input type="submit" value="Sign up" id='sign_up_submit'>
+      <input type="submit" value="Sign in" id='sign_in_submit'>
     </form>
 
   </body>
+
 </html>
