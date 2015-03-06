@@ -4,9 +4,11 @@ var server = require('http').createServer(app);
 var bodyParser = require('body-parser');
 var User = require('./src/user.js');
 
+var engine = require('ejs-locals');
+app.engine('ejs', engine);
+
 var session = require('express-session');
 app.use(session({secret: 'cat'}));
-var sess
 
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views');
@@ -23,7 +25,8 @@ db.once('open', function (callback) {
 });
 
 app.get('/', function(request, response){
-  response.render('index', {user: null})
+  var user = currentUser()
+  response.render('index', {user: user})
 });
 
 app.get('/signup', function(request, response){
@@ -32,17 +35,26 @@ app.get('/signup', function(request, response){
 
 app.post('/sessions', function(request, response){
   var user = new User({name: request.body.name,
-            email: request.body.email,
-            password: request.body.password 
-            }).save(function(err, user){
-              if(err){
-                response.render('signup', {message: 'ERROR'})
-              } else {
-                request.session.user = user;
-                response.render('index', {user: user.name}); 
-              }                  
-            }) 
+                      email: request.body.email,
+                      password: request.body.password
+                    }).save(function(err, user){
+                      if(err){
+                        response.render('signup', {message: 'ERROR'})
+                      } else {
+                        session.user = user;
+                        var user = currentUser()
+                        response.render('index', {user: user, name: user.name});
+                      }
+                    })
 });
+
+function currentUser(){
+  if(session.user){
+    return session.user
+  } else {
+    return null
+  }
+}
 
 
 server.listen(3000, function(){
