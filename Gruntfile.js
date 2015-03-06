@@ -18,13 +18,13 @@ grunt.initConfig({
     }, 
     all: ['test/unitTests/']
   },
-  mocha_casperjs: {
-    options: {
-      timeout: 5000,
-      color: false
-    },
-    files: {
-      src: ['test/acceptanceTests/*.js']
+  mochaTest: {
+    test: {
+      options: {
+        reporter: 'nyan',
+        quiet: false
+      },
+    src: ['test/acceptanceTests/*.js']
     }
   },
   express: {
@@ -42,17 +42,19 @@ grunt.initConfig({
     './public/**/*.js',
     './views/*.ejs'
     ], 
-    tasks: ['jasmine_node', 'jshint', 'express', 'mocha_casperjs']
+    tasks: ['jasmine_node', 'jshint', 'express', 'mochaTest']
   }
 });
 
-grunt.loadNpmTasks('grunt-mocha-casperjs');
+grunt.loadNpmTasks('grunt-mocha-cli');
 grunt.loadNpmTasks('grunt-express-server');
 grunt.loadNpmTasks('grunt-jasmine-node');
 grunt.loadNpmTasks('grunt-contrib-jshint');
 grunt.loadNpmTasks('grunt-contrib-watch');
+grunt.loadNpmTasks('grunt-mocha-test');
 
-grunt.registerTask('default',['express','mocha_casperjs']);
+grunt.registerTask('default',['express','mochacli']);
 grunt.registerTask('jasmine', ['jasmine_node']);
+grunt.registerTask('mocha', 'mochaTest');
 
 };
