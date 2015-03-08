@@ -18,4 +18,9 @@ userSchema.pre('save', function(next) {
   });
 });
 
+userSchema.methods.logIn = function(email, password){
+  console.log(email)
+  console.log(password)
+}
+
 module.exports = mongoose.model('User', userSchema);

@@ -54,7 +54,10 @@ app.get('/signin', function(request, response){
 });
 
 app.post('/new', function(request, response){
-  console.log(request.body)
+  User.logIn(request.body.email, request.body.password, function(err, working){
+    if(err) console.log(err)
+    if(working) console.log(working)
+  })
 });
 
 function currentUser(){
