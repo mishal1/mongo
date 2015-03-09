@@ -54,10 +54,20 @@ app.get('/signin', function(request, response){
 });
 
 app.post('/new', function(request, response){
-  User.logIn(request.body.email, request.body.password, function(err, working){
-    if(err) console.log(err)
-    if(working) console.log(working)
-  })
+  User.findOne({email: request.body.email}, function(err, user){
+    if(user){
+      var logIn = user.passwordMatch(request.body.password, function(err, match){
+        if(match){
+          session.user = user;
+          response.render('index', {user: user, name: user.name});
+        } else {
+          response.render('signin', {message: 'Incorrect password'})
+        }
+      })
+    } else {
+      response.render('signin', {message: 'User doesn\'t exist'})
+    }
+  });
 });
 
 function currentUser(){

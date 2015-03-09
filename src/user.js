@@ -18,9 +18,14 @@ userSchema.pre('save', function(next) {
   });
 });
 
-userSchema.methods.logIn = function(email, password){
-  console.log(email)
-  console.log(password)
+userSchema.methods.passwordMatch = function(password, callback){
+  bcrypt.compare(password, this.password, function(err, match) {
+    if(match){
+      return callback(null, match)
+    } else {
+      return callback(err)
+    }
+  });
 }
 
 module.exports = mongoose.model('User', userSchema);
